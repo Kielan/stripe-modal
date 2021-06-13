@@ -1,5 +1,15 @@
+/*----- VARIABLES -----*/
+:root {
+	--primary: #282828;
+	--success: #4CAF50;
+	--error: #f44336;
+	--small-screen: 467px;
+	--bouncy: cubic-bezier(.20, 1.3, .7, 1);
+}
+
 html,
 body {
+	height: 100%;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
@@ -14,3 +24,374 @@ a {
 * {
   box-sizing: border-box;
 }
+input,
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  border-style: none;
+}
+
+html {
+  background-color: #6772e5;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family: Roboto, Open Sans, Segoe UI, sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  text-rendering: optimizeLegibility;
+  height: 100%;
+}
+form {
+	display: flex;
+	justify-content: center;
+	flex: 1;
+	flex-direction: column;
+  max-width: 500px;
+  margin: 80px auto;
+	width: 100%;
+}
+
+label {
+  color: #6b7c93;
+  font-weight: 300;
+  letter-spacing: 0.025em;
+  margin-top: 16px;
+  display: block;
+}
+
+button {
+  white-space: nowrap;
+  border: 0;
+  outline: 0;
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 14px;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  background-color: #6772e5;
+  text-decoration: none;
+  -webkit-transition: all 150ms ease;
+  transition: all 150ms ease;
+  margin-top: 10px;
+}
+button:hover {
+  color: #fff;
+  cursor: pointer;
+  background-color: #7795f8;
+  transform: translateY(-1px);
+  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+button[disabled] {
+  opacity: 0.6;
+}
+
+input {
+  display: block;
+  border: none;
+  font-size: 18px;
+  margin: 10px 0 20px 0;
+  max-width: 100%;
+  padding: 10px 14px;
+  box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px,
+    rgba(0, 0, 0, 0.0196078) 0px 1px 0px;
+  border-radius: 4px;
+  background: white;
+  color: #424770;
+  letter-spacing: 0.025em;
+  width: 500px;
+}
+
+.result,
+.error {
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.error {
+  color: #e4584c;
+}
+
+.result {
+  color: #666ee8;
+}
+
+#placeholder-hidden::placeholder {
+	color: transparent;
+}
+
+/* 
+The StripeElement class is applied to the Element container by default.
+More info: https://stripe.com/docs/stripe-js/reference#element-options
+*/
+
+.StripeElement,
+.StripeElementIdeal {
+  display: block;
+  margin: 10px 0 10px 0;
+  max-width: 500px;
+  padding: 10px 14px;
+  box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px,
+    rgba(0, 0, 0, 0.0196078) 0px 1px 0px;
+  border-radius: 4px;
+  background: transparent;
+}
+
+.StripeElement--focus,
+.StripeElementIdeal--focus {
+  box-shadow: rgba(50, 50, 93, 0.109804) 0px 4px 6px,
+    rgba(0, 0, 0, 0.0784314) 0px 1px 3px;
+  -webkit-transition: all 150ms ease;
+  transition: all 150ms ease;
+}
+
+.StripeElement.loading {
+  height: 41.6px;
+  opacity: 0.6;
+}
+
+.StripeElementIdeal {
+  padding: 0;
+}
+
+/*----- POSITIONING -----*/
+
+.container {
+  display: flex;
+  width: 80%;
+  margin: 0 auto;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  perspective: 100;
+  position: relative;
+  background-color: var(--primary);
+  background: linear-gradient(185grad, darken(var(--primary), 20%), var(--primary));
+  
+	@media (max-width: $small-screen) {
+    width: 90%;
+  }
+}
+
+/*----- HF CONTAINERS -----*/
+
+.field-container {
+  position: absolute;
+  width: 100%;
+  border: 1px solid #fff;
+  z-index: 2;
+  opacity: 1;
+  transition: all 500ms $bouncy;
+ -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transform-origin: bottom;
+  transition: transform 0.5s $bouncy, opacity 0.5s;
+  opacity: 1;
+	.StripeElement {
+		background: transparent;	
+	}
+}
+
+.field-container:nth-child(1) {
+  animation: inputIntro 0.5s $bouncy;
+}
+
+.field-container--hidden {
+  opacity: 0;
+  transform: translate(0em, 0em) rotateX(180deg);
+  z-index: -1;
+}
+
+.field-container--button {
+  border: 0;
+}
+
+.hosted-field {
+  height: 5.5em;
+  width: 100%;
+  display: block;
+  padding-left: 1em;
+}
+
+
+/*----- HF LABELS -----*/
+
+.hosted-field--label {
+  color: #FFF;
+  position: absolute;
+  top: 0.9em;
+  left: 0.5em;
+  transition: transform 0.2s $bouncy, color 0.2s;
+  transform-origin: 0 0;
+  font-size: 2em;
+  line-height: 1;
+}
+
+.hosted-field--label--moved,
+.not-empty {
+  transform: scale(0.8) translate(0em, -3em);
+  transition: transform 0.2s $bouncy, color 0.2s;
+  color: #fff;
+}
+
+
+/*----- HF MESSAGES -----*/
+
+.field-message {
+  font-size: 1em;
+  margin: 1em;
+  opacity: .3;
+  
+  @media (max-width: $small-screen) {
+    margin: 0;
+  }
+}
+
+.field-message--error {
+  color: $error;
+}
+
+
+/*----- HF SUBMIT -----*/
+
+#button-pay {
+  -webkit-appearance: none;
+  width: 100%;
+  border: 0;
+  text-align: center;
+  font-size: 2em;
+  padding: 0.9em;
+  color: #000;
+  background: #fff;
+  cursor: pointer;
+}
+
+
+/*----- HF CONTROLS -----*/
+
+.form-controls__steps {
+  font-size: 1.5em;
+  position: absolute;
+  right: 1em;
+  transform: translateY(-1.9em);
+  opacity: .3;
+}
+
+.form-controls {
+  position: absolute;
+  right: 0;
+  z-index: 5;
+  animation: arrowIntroScale 0.3s 0.4s $bouncy backwards;
+  transition: transform 0.3s $bouncy;
+  @media (max-width: $small-screen) {
+     right: 0.5em;
+  }
+  
+  a {
+    display: inline-block;
+    padding: 1em 0.5em;
+    transform: scale(0.8);
+    transition: transform 0.3s $bouncy;
+    
+    @media (max-width: $small-screen) {
+      padding: 0.7em 0.1em;
+      transform: scale(0.6);
+    }
+  }
+  a:hover {
+    transform: scale(0.9);
+    transition: transform 0.1s $bouncy;
+  }
+  .form-controls--hidden {
+    transform: scale(0);
+    transition: transform 0.3s $bouncy;
+  }
+  .form-controls--hidden:hover {
+    transform: scale(0);
+  }
+}
+.form-controls--back {
+  transition: transform 0.2s $bouncy;
+  transform: translateX(2em);
+}
+
+.form-controls--end {
+  transition: transform 0.2s $bouncy;
+  transform: translateY(-5em) translateX(-3.5em);
+}
+
+
+/*----- BT CLASSES -----*/
+
+.braintree-hosted-fields-valid {
+  background: rgba(var(--success), 0.5);
+  animation: success 0.5s $bouncy;
+}
+
+.braintree-hosted-fields-invalid {
+  background: rgba(var(--error), 0.5);
+  color: #fff;
+  animation: error 0.5s $bouncy;
+}
+
+
+/*----- ANIMATIONS -----*/
+
+@keyframes inputIntro {
+  0% {
+    transform: translate(0, 0.2em) rotateX(90deg) scale(0.9);
+  }
+  100% {
+    transform: translate(0, 0) rotateX(0) scale(1);
+  }
+}
+
+@keyframes arrowIntroScale {
+  0% {
+    transform: translate(-1em, 0) scale(0);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes error {
+  0% {
+    background: var(--primary);
+    transform: scale(1);
+  }
+  50% {
+    background: rgba(var(--error), 1);
+    transform: scale(1.1);
+  }
+  100% {
+    background: rgba(var(--error), 0.5);
+    transform: scale(1);
+  }
+}
+
+@keyframes success {
+  0% {
+    background: var(--primary);
+    transform: scale(1);
+  }
+  50% {
+    background: darken(var(--success), 10%);
+    transform: scale(1.1);
+  }
+  100% {
+    background: rgba(var(--success), 0.5);
+    transform: scale(1);
+  }
+}
+
